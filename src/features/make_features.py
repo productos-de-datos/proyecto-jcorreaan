@@ -15,16 +15,12 @@ def make_features():
     analizar y determinar las variables explicativas del modelo.
 
     """
-
-
     df = pd.read_csv("./data_lake/business/precios-diarios.csv")
     df['log_precio'] =np.log(df['precio'])  
     df.to_csv("./data_lake/business/features/precios_diarios.csv", index=False)
 
     #return
     #raise NotImplementedError("Implementar esta función")
-
-
 
 if __name__ == "__main__":
     import doctest
