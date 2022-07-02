@@ -12,7 +12,6 @@ def compute_monthly_prices():
     * precio: precio promedio mensual de la electricidad en la bolsa nacional
 
     """
-
     df = pd.read_csv("data_lake/cleansed/precios-horarios.csv", index_col=None, header=0)
     df = df[["fecha", "precio"]]
     df['fecha'] =pd.to_datetime(df['fecha'], format='%Y-%m-%d')
