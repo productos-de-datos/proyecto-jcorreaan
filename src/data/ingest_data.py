@@ -1,3 +1,4 @@
+
 from ast import Try
 from distutils.log import Log
 import logging
@@ -6,20 +7,24 @@ from urllib import request
 
 def ingest_data():
     """Ingeste los datos externos a la capa landing del data lake.
-
+    
     Del repositorio jdvelasq/datalabs/precio_bolsa_nacional/xls/ descarge los
     archivos de precios de bolsa nacional en formato xls a la capa landing. La
     descarga debe realizarse usando únicamente funciones de Python.
     >>> ingest_data()
     """
 
-    fecha = datetime.datetime.now()
 
-    total_anios = fecha.year - 1995
+    #import datetime
+    #import logging
+    from os import remove
 
-    anios = list(range(1995, 1995 + total_anios, 1))
+    #fecha = datetime.datetime.now()
+    #total_anios = fecha.year - 1995
 
-    for anio in anios:
+    #anios = list(range(1995, 1995 + total_anios, 1))
+
+    for anio in range(1995, 2022):
         f = open(f"data_lake/landing/{anio}.xlsx", "wb")
         try:
             f.write(
@@ -45,7 +50,7 @@ def ingest_data():
             logging.exception("Error con el archivo: " & anio)
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     import doctest
-    ingest_data()
+
     doctest.testmod()
