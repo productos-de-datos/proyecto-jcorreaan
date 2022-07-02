@@ -10,8 +10,8 @@ def make_daily_prices_plot():
     """
     
 
-    #df_daily_prices = pd.read_csv("./data_lake/business/precios-diarios.csv")
-    df = pd.read_csv("precios-diarios.csv", index_col=None, header=0)
+    df_daily_prices = pd.read_csv("./data_lake/business/precios-diarios.csv")
+    #df = pd.read_csv("precios-diarios.csv", index_col=None, header=0)
     df['fecha'] = pd.to_datetime(df['fecha'])
     #plot = df['precio'].plot(figsize=(10, 8))
     x = df['fecha']
@@ -20,7 +20,7 @@ def make_daily_prices_plot():
     plt.figure(figsize=(12, 8)) 
     plt.plot(x, y, label='Promedio Diario') 
     #plt.savefig("daily_prices.png") 
-    plt.savefig(./data_lake/business/reports/figures/daily_prices.png") 
+    plt.savefig("./data_lake/business/reports/figures/daily_prices.png") 
     
 if __name__ == "__main__":
     import doctest
