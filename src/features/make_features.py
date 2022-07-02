@@ -20,8 +20,8 @@ def make_features():
     df = pd.read_csv("./data_lake/business/precios-diarios.csv")
     df['log_precio'] =np.log(df['precio'])
 
-
-    df.to_csv('precios-diarios_fe.csv', index=False)
+    
+    df.to_csv("./data_lake/business/features/precios_diarios.csv", index=False)
 
     #return
 
