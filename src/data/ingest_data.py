@@ -1,11 +1,3 @@
-def ingest_data():
-    """Ingeste los datos externos a la capa landing del data lake.
-    
-    Del repositorio jdvelasq/datalabs/precio_bolsa_nacional/xls/ descarge los
-    archivos de precios de bolsa nacional en formato xls a la capa landing. La
-    descarga debe realizarse usando únicamente funciones de Python.
-  
-    """
 from ast import Try
 from distutils.log import Log
 import logging
@@ -14,17 +6,12 @@ from urllib import request
 
 def ingest_data():
     """Ingeste los datos externos a la capa landing del data lake.
-    
+
     Del repositorio jdvelasq/datalabs/precio_bolsa_nacional/xls/ descarge los
     archivos de precios de bolsa nacional en formato xls a la capa landing. La
     descarga debe realizarse usando únicamente funciones de Python.
     >>> ingest_data()
     """
-
-    import urllib.request
-    import datetime
-    import logging
-    from os import remove
 
     fecha = datetime.datetime.now()
 
@@ -60,5 +47,5 @@ def ingest_data():
 
 if __name__ == "_main_":
     import doctest
-
+    ingest_data()
     doctest.testmod()
