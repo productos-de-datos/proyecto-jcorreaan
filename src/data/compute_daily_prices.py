@@ -1,3 +1,5 @@
+import pandas as pd
+
 def compute_daily_prices():
     """Compute los precios promedios diarios.
     Usando el archivo data_lake/cleansed/precios-horarios.csv, compute el prcio
@@ -6,7 +8,6 @@ def compute_daily_prices():
     * fecha: fecha en formato YYYY-MM-DD
     * precio: precio promedio diario de la electricidad en la bolsa nacional
     """
-    import pandas as pd
 
     df = pd.read_csv("data_lake/cleansed/precios-horarios.csv", index_col=None, header=0)
     df = df[["fecha", "precio"]]
@@ -14,14 +15,12 @@ def compute_daily_prices():
     anios_mes_agrupada = df.groupby('fecha').mean({"precio": "precio"}).reset_index()
     #anios_mes_agrupada
     anios_mes_agrupada.to_csv("data_lake/business/precios-diarios.csv", index=None, header=True)
-    
-    # raise NotImplementedError("Implementar esta función")
 
+# raise NotImplementedError("Implementar esta función")
 
 if __name__ == "__main__":
 
     import doctest
-
-    doctest.testmod()
-    compute_daily_prices()        
-    
+    compute_daily_prices()   
+    doctest.testmod()S
+     
