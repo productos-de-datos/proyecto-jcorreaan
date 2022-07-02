@@ -12,8 +12,8 @@ def clean_data():
     Este archivo contiene toda la información del 1997 a 2021.
     """    
 
-    path_file = glob.glob(r"data_lake/raw/*.csv")
-    archivos = []
+path_file = glob.glob(r"data_lake/raw/*.csv")
+archivos = []
 
 for filename in path_file:
     df = pd.read_csv(filename, index_col=None, header=0)
