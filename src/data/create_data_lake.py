@@ -22,11 +22,9 @@ def create_data_lake():
               |___ forecasts/
 
     ```
-
-
-    """
-    mkdir("data_lake") 
-    mkdir("data_lake/landing") 
+   """
+    mkdir("data_lake_1") 
+    mkdir("data_lake_1/landing") 
     mkdir("data_lake/raw") 
     mkdir("data_lake/cleansed") 
     mkdir("data_lake/business") 
