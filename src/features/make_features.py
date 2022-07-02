@@ -16,15 +16,12 @@ def make_features():
 
     """
 
-    #df = pd.read_csv("precios-diarios_2.csv", index_col=None, header=0)
-    df = pd.read_csv("./data_lake/business/precios-diarios.csv")
-    df['log_precio'] =np.log(df['precio'])
 
-    
+    df = pd.read_csv("./data_lake/business/precios-diarios.csv")
+    df['log_precio'] =np.log(df['precio'])  
     df.to_csv("./data_lake/business/features/precios_diarios.csv", index=False)
 
     #return
-
     #raise NotImplementedError("Implementar esta función")
 
 
