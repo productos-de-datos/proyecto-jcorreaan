@@ -12,14 +12,15 @@ def make_monthly_prices_plot():
     """
 
     df = pd.read_csv("./data_lake/business/precios-mensuales.csv")
-    df['fecha'] = pd.to_datetime(df['fecha'])
+    #df['fecha'] = pd.to_datetime(df['fecha'])
     x = df['fecha']
     y = df['precio']
     plt.figure(figsize=(12, 8)) 
     plt.plot(x, y, label='Promedio Mensual') 
-    plt.savefig("data_lake/business/reports/figures/monthly_prices.png") 
+    plt.savefig("./data_lake/business/reports/figures/monthly_prices.png") 
+
 
 if __name__ == "__main__":
-        import doctest
-        make_monthly_prices_plot()
-        doctest.testmod()
+    import doctest
+    make_monthly_prices_plot()
+    doctest.testmod()
