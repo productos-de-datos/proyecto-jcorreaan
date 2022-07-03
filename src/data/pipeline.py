@@ -1,92 +1,88 @@
 """
 Construya un pipeline de Luigi que:
-
 * Importe los datos xls
 * Transforme los datos xls a csv
 * Cree la tabla unica de precios horarios.
 * Calcule los precios promedios diarios
 * Calcule los precios promedios mensuales
-
 En luigi llame las funciones que ya creo.
 """
+
 import luigi
-from create_data_lake import create_data_lake
-from ingest_data import ingest_data
-from transform_data import transform_data
-from clean_data import clean_data
-from compute_daily_prices import compute_daily_prices
-from compute_monthly_prices import compute_monthly_prices
+from luigi import Task, LocalTarget
 
-class CreateStructure(luigi.Task):
-    """
-    Ejecuta la tarea de crear la estructura
-    """
+
+class ingestar_data(Task):
     def output(self):
-        return []
+        return LocalTarget('data_lake/landing/arc.csv')
 
     def run(self):
-        create_data_lake()
 
-class IngestData(luigi.Task):
-    """
-    Ejecuta la tarea de recuperar la data desde un archivo externo
-    """
+        from ingest_data import ingest_data
+        with self.output().open('w') as archivos:
+            ingest_data()
+
+
+class transformar_data(Task):
+    def requires(self):
+        return ingestar_data()
+
     def output(self):
-        return []
+        return LocalTarget('data_lake/raw/arc.txt')
 
     def run(self):
-        ingest_data()
 
-class TransformData(luigi.Task):
-    """
-    Ejecuta la tarea de transformar la data
-    y consolidarla en un unico archivo
-    """
+        from transform_data import transform_data
+        with self.output().open('w') as archivos:
+            transform_data()
+
+
+class limpiar_data(Task):
+    def requires(self):
+        return transformar_data()
+
     def output(self):
-        return []
+        return LocalTarget('data_lake/cleansed/arc.txt')
 
     def run(self):
-        transform_data()
 
-class CleanData(luigi.Task):
-    """
-    Ejecuta la tarea de limpiar la data y
-    dar una estrucutra adecuada
-    """
+        from clean_data import clean_data
+        with self.output().open('w') as archivos:
+            clean_data()
+
+
+class computar_precio_diario(Task):
+    def requires(self):
+        return limpiar_data()
+
     def output(self):
-        return []
+        return LocalTarget('data_lake/business/arc.txt')
 
     def run(self):
-        clean_data()
 
-class ComputeDailyPrices(luigi.Task):
-    """
-    Ejecuta la tarea de consolidar los precios a nivel diario
-    """
+        from compute_daily_prices import compute_daily_prices
+        with self.output().open('w') as archivos:
+            compute_daily_prices()
+
+
+class computar_precio_mensual(Task):
+    def requires(self):
+        return computar_precio_diario()
+
     def output(self):
-        return []
+        return LocalTarget('data_lake/business/arc.txt')
 
     def run(self):
-        compute_daily_prices()
 
-class ComputeMonthlyPrices(luigi.Task):
-    """
-    Ejecuta la tarea de consolidar los precios a nivel mensual
-    """
-    def output(self):
-        return []
-
-    def run(self):
-        compute_monthly_prices()
+        from compute_monthly_prices import compute_monthly_prices
+        with self.output().open('w') as archivos:
+            compute_monthly_prices()
 
 
-def pipeline():
-    """
-        llama al pipeline
-    """
-    luigi.build([CreateStructure(), IngestData(), TransformData(), CleanData(), ComputeDailyPrices(), ComputeMonthlyPrices() ],  local_scheduler=True)
+if __name__ == '__main__':
+    luigi.run(["computar_precio_mensual", "--local-scheduler"])
 
 if __name__ == "__main__":
     import doctest
-    pipeline()
+
     doctest.testmod()
